@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Properties>
+            <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+            <Property name="APP_LOG_ROOT">D:/Project/project/logs/</Property>
+        </Properties>
+        <Console name="consoleLog" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="maintenanceLog" fileName="${APP_LOG_ROOT}mtn.log"
+                     filePattern="${APP_LOG_ROOT}/logs/mtn-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="25MB" />
+                <!--<TimeBasedTriggeringPolicy interval="1" />-->
+            </Policies>
+            <!--<DefaultRolloverStrategy max="10"/>-->
+        </RollingFile>
+        <RollingFile name="projectLog" fileName="${APP_LOG_ROOT}project.log"
+                     filePattern="${APP_LOG_ROOT}/logs/mtn-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB" />
+                <!--<TimeBasedTriggeringPolicy interval="1" />-->
+            </Policies>
+            <!--<DefaultRolloverStrategy max="10"/>-->
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.brs.project.maintenance" level="debug" additivity="false">
+            <AppenderRef ref="maintenanceLog"/>
+        </Logger>
+        <Logger name="com.brs.project" level="debug" additivity="false">
+            <AppenderRef ref="projectLog"/>
+        </Logger>
+        <Logger name="org.springframework.boot" level="error" additivity="false">
+            <AppenderRef ref="consoleLog"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="consoleLog"/>
+        </Root>
+    </Loggers>
+</Configuration>

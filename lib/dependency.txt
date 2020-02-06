@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=base.jar -DgroupId=com.sytan -DartifactId=base -Dversion=1.0 -Dpackaging=jar
