@@ -1,5 +1,6 @@
 package com.brs.project.common.model;
 
+import com.brs.project.category.entity.Category;
 import com.brs.project.maintenance.entity.UserGroupMtn;
 import com.brs.project.passvault.entity.PassVault;
 import com.brs.project.user.entity.User;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 @Getter
@@ -30,4 +32,7 @@ public class ResponseModel {
     private List<User> userList;
     private List<UserGroupMtn> userGroupMtnList;
     private List<PassVault> passVaultList;
+    private Map<String,Object> listData;
+    private List<Category> categoryList;
+    private Category category;
 }

@@ -38,13 +38,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/sl/userGroupMtn/**",
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS,
+                 "/sl/userGroupMtn/**",
                 "/sl/login/**",
                 "/sl/user/doAddUserApi",
                 "/sl/user/doCheckUserName",
                 "/sl/user/doCheckUserEmail",
-                "/sl/user/**").permitAll()
-                .antMatchers("/sl/user/**").hasAnyRole("ADM","UL1","UL2")
+                "/sl/user/**",
+                "/sl/passvlt/**").permitAll()
+                .antMatchers(HttpMethod.POST,
+                "/sl/userGroupMtn/**",
+                "/sl/login/**",
+                "/sl/user/doAddUserApi",
+                "/sl/user/doCheckUserName",
+                "/sl/user/doCheckUserEmail").permitAll()
+                .antMatchers(
+                "/sl/user/**",
+                "/sl/passvlt/**"
+                ).hasAnyRole("ADM","UL1","UL2")
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

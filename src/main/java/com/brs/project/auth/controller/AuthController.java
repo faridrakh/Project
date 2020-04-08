@@ -4,6 +4,7 @@ import com.brs.project.auth.entity.LoginSession;
 import com.brs.project.auth.service.AuthService;
 import com.brs.project.common.controller.BaseController;
 import com.brs.project.common.model.RequestModel;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +26,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping("/doLogin")
-    public ResponseEntity<?> authenticateUser(@RequestBody RequestModel loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody RequestModel loginRequest) throws ApplicationException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUserName(),

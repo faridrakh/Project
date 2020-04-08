@@ -6,6 +6,7 @@ import com.brs.project.auth.entity.UserPrincipal;
 import com.brs.project.common.helper.CommonUtils;
 import com.brs.project.user.dao.UserDAO;
 import com.brs.project.user.entity.User;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,7 +30,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     }
 
     @Override
-    public LoginSession processLogin(String tokenId, Authentication authentication) {
+    public LoginSession processLogin(String tokenId, Authentication authentication) throws ApplicationException {
         UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
         LoginSession session = new LoginSession();
         session.setId(CommonUtils.generateUUID());
@@ -47,7 +48,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     }
 
     @Override
-    public LoginSession processUpdateSession(LoginSession login) {
+    public LoginSession processUpdateSession(LoginSession login) throws ApplicationException {
         return authDAO.updateLoginSession(login);
     }
 
@@ -60,11 +61,11 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         return UserPrincipal.create(user);
     }
 
-    public LoginSession loadUserSessionByTokenId(String id) throws Exception {
+    public LoginSession loadUserSessionByTokenId(String id) throws ApplicationException {
         LoginSession user = authDAO.getSession(id);
 
         if(null == user){
-            new UsernameNotFoundException("User not found with id : " + id);
+            throw new ApplicationException("User not found with TokenId : " + id);
         } else {
             Timestamp now = new Timestamp(new Date().getTime());
             Timestamp loginTime = user.getLoginDate();
@@ -73,7 +74,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             cal.add(Calendar.SECOND, user.getTokenDuration());
             Timestamp ExpireTime = new Timestamp(cal.getTime().getTime());
             if(ExpireTime.compareTo(now) < 0){
-                throw new Exception("Your Token is expired, Please login again");
+                throw new ApplicationException("Your Token is expired, Please login again");
             }
         }
         return user;

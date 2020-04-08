@@ -1,11 +1,13 @@
 package com.brs.project.auth.dao;
 
 import com.brs.project.auth.entity.LoginSession;
+import com.sytan.base.lib.ApplicationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 @Repository
@@ -18,13 +20,13 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
-    public LoginSession insertLoginSession(LoginSession login) {
+    public LoginSession insertLoginSession(LoginSession login) throws ApplicationException {
         entityManager.persist(login);
         return login;
     }
 
     @Override
-    public LoginSession updateLoginSession(LoginSession login) {
+    public LoginSession updateLoginSession(LoginSession login) throws ApplicationException {
         LoginSession lmodel = entityManager.find(LoginSession.class,login.getId());
         lmodel.setIsActive("N");
         entityManager.merge(lmodel);
@@ -32,12 +34,15 @@ public class AuthDAOImpl implements AuthDAO {
     }
 
     @Override
-    public LoginSession getSession(String tokenId) {
+    public LoginSession getSession(String tokenId) throws ApplicationException {
         LoginSession result;
         String qr = "FROM LoginSession ls INNER JOIN FETCH ls.user um WHERE ls.id = :tokenId AND ls.isActive <> 'N'";
         Query query = entityManager.createQuery(qr);
         query.setParameter("tokenId", tokenId);
-        result = (LoginSession) query.getSingleResult();
-        return result;
+        try {
+            return (LoginSession) query.getSingleResult();
+        } catch (NoResultException ex){
+            return null;
+        }
     }
 }

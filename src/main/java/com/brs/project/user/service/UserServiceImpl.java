@@ -6,6 +6,7 @@ import com.brs.project.maintenance.dao.UserGroupMtnDAO;
 import com.brs.project.user.dao.UserDAO;
 import com.brs.project.user.entity.User;
 import com.brs.project.usergrp.entity.UserGroup;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
+    public User addUser(User user) throws ApplicationException {
         User newUser;
         String uid = commonUtils.generateUUID();
         String gid = commonUtils.generateUUID();

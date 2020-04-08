@@ -8,6 +8,7 @@ import com.brs.project.common.model.RequestModel;
 import com.brs.project.common.model.ResponseModel;
 import com.brs.project.user.entity.User;
 import com.brs.project.user.service.UserService;
+import com.sytan.base.lib.ApplicationException;
 import com.sytan.base.lib.ObjectCopier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,10 +30,9 @@ public class UserController extends BaseController {
     private final CommonUtils commonUtils = new CommonUtils();
 
     @RequestMapping(value = "/doAddUserApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doAddUserApi(@RequestBody RequestModel request) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public ResponseEntity<?> doAddUserApi(@RequestBody RequestModel request) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ApplicationException {
         ResponseModel response = new ResponseModel();
         User user = new User();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,user);
         user = userService.addUser(user);
         response.setUser(user);
@@ -46,7 +46,6 @@ public class UserController extends BaseController {
     public ResponseEntity<?> doUpdateUserApi(@RequestBody RequestModel request) {
         ResponseModel response = new ResponseModel();
         User user = new User();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,user);
         String result = userService.updateUser(user);
         if(CommonConstants.SUCCESS_DESCP.equals(result)){
@@ -75,7 +74,6 @@ public class UserController extends BaseController {
     public ResponseEntity<?> doGetUserDetailApi(@RequestBody RequestModel request) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         ResponseModel response = new ResponseModel();
         User user = new User();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,user);
         if(!dataContainer.getUserId().equals(user.getId())){
             //throw new Exception("Unauthorized");
@@ -94,7 +92,6 @@ public class UserController extends BaseController {
     public ResponseEntity<?> doCheckUserName(@RequestBody RequestModel request) {
         ResponseModel response = new ResponseModel();
         User user = new User();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,user);
         user = userService.getUserByUserName(user.getUserName());
         if(null != user) {
@@ -112,7 +109,6 @@ public class UserController extends BaseController {
     public ResponseEntity<?> doCheckUserEmail(@RequestBody RequestModel request) {
         ResponseModel response = new ResponseModel();
         User user = new User();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,user);
         user = userService.getUserByEmail(user.getEmail());
         if(null != user) {

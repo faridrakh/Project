@@ -2,11 +2,12 @@ package com.brs.project.user.service;
 
 import com.brs.project.common.model.DataContainer;
 import com.brs.project.user.entity.User;
+import com.sytan.base.lib.ApplicationException;
 
 import java.util.List;
 
 public interface UserService {
-    User addUser(User user);
+    User addUser(User user) throws ApplicationException;
     String updateUser(User user);
     String deleteUser(String id);
     User getUser(String id);

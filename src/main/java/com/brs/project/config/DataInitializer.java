@@ -1,6 +1,7 @@
 package com.brs.project.config;
 
 import com.brs.project.maintenance.service.UserGroupMtnService;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +17,7 @@ public class DataInitializer {
     }
 
     @PostConstruct
-    private void initData(){
+    private void initData() throws ApplicationException {
         userGroupMtnService.getUserGroupMtnList();
     }
 

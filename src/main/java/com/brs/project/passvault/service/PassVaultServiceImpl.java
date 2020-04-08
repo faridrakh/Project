@@ -1,5 +1,6 @@
 package com.brs.project.passvault.service;
 
+import com.brs.project.common.helper.CommonConstants;
 import com.brs.project.common.helper.CommonUtils;
 import com.brs.project.passvault.dao.PassVaultDAO;
 import com.brs.project.passvault.entity.PassVault;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -28,6 +30,9 @@ public class PassVaultServiceImpl implements PassVaultService {
 
     @Override
     public String updatePassword(PassVault passVault) {
+        PassVault tmp = passVaultDAO.getPassword(passVault.getId());
+        passVault.setCreateBy(tmp.getCreateBy());
+        passVault.setDtCreate(tmp.getDtCreate());
         passVault.setDtUpdate(commonUtils.generateDate());
         passVault.setUpdateBy(passVault.getUsrId());
         return passVaultDAO.updatePassword(passVault);
@@ -35,16 +40,20 @@ public class PassVaultServiceImpl implements PassVaultService {
 
     @Override
     public String deletePassword(String id) {
-        return passVaultDAO.deletePassword(id);
+        PassVault passVault = getPassword(id);
+        passVault.setDtUpdate(commonUtils.generateDate());
+        passVault.setUpdateBy(passVault.getUsrId());
+        passVault.setIsDel(CommonConstants.BOOLEAN_YES);
+        return passVaultDAO.updatePassword(passVault);
     }
 
     @Override
     public PassVault getPassword(String id) {
-        return null;
+        return passVaultDAO.getPassword(id);
     }
 
     @Override
-    public List<PassVault> getListPassword(String usrId) {
-        return passVaultDAO.getListPassword(usrId);
+    public Map<String,Object> getListPassword(String usrId, Integer page) {
+        return passVaultDAO.getListPassword(usrId,page);
     }
 }

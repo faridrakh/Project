@@ -1,8 +1,12 @@
 package com.brs.project.common.helper;
 
 public class CommonConstants {
+    public static final String BOOLEAN_YES = "Y";
+    public static final String BOOLEAN_NO = "N";
     public static final String SUCCESS_CODE = "000000000";
     public static final String SUCCESS_DESCP = "SUCCESS";
+    public static final String NODATA_CODE = "900000000";
+    public static final String NODATA_DESCP = "NO DATA";
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 

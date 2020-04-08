@@ -45,4 +45,7 @@ public class PassVault {
 
     @Column(name = "UPDATE_BY")
     private String updateBy;
+
+    @Column(name = "is_del")
+    private String isDel;
 }

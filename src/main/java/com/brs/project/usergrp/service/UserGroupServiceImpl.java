@@ -5,6 +5,7 @@ import com.brs.project.common.helper.CommonUtils;
 import com.brs.project.maintenance.dao.UserGroupMtnDAO;
 import com.brs.project.usergrp.dao.UserGroupDAO;
 import com.brs.project.usergrp.entity.UserGroup;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class UserGroupServiceImpl implements UserGroupService{
     }
 
     @Override
-    public void addUserGrp(String userId) {
+    public void addUserGrp(String userId) throws ApplicationException {
         UserGroup userGroupModel = new UserGroup();
         String uuid = commonUtils.generateUUID();
         String mtGrpId = userGroupMtnDAO.getUserGroupMtnByCd(CommonConstants.UL1_CODE);

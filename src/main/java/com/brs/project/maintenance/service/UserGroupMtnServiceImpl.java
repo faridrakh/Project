@@ -1,8 +1,8 @@
 package com.brs.project.maintenance.service;
 
-import com.brs.project.maintenance.controller.UserGroupMtnController;
 import com.brs.project.maintenance.dao.UserGroupMtnDAO;
 import com.brs.project.maintenance.entity.UserGroupMtn;
+import com.sytan.base.lib.ApplicationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,7 +22,7 @@ public class UserGroupMtnServiceImpl implements UserGroupMtnService {
 
     @Override
     @Cacheable(value = "UserGroupMtnList")
-    public List<UserGroupMtn> getUserGroupMtnList() {
+    public List<UserGroupMtn> getUserGroupMtnList() throws ApplicationException {
         if(logger.isDebugEnabled()){
             logger.debug("Start Listing User Group");
         }

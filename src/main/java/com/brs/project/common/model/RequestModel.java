@@ -4,6 +4,8 @@ import com.brs.project.usergrp.entity.UserGroup;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Setter
 @Getter
 public class RequestModel {
@@ -15,4 +17,11 @@ public class RequestModel {
     private String usrId;
     private String location;
     private UserGroup userGroup;
+    private Integer page;
+    private Date dtCreate;
+    private String createBy;
+    private Date dtUpdate;
+    private String updateBy;
+    private String categoryName;
+    private String type;
 }

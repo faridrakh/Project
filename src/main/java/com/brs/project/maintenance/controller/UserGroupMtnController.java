@@ -5,6 +5,7 @@ import com.brs.project.common.helper.CommonConstants;
 import com.brs.project.common.model.ResponseModel;
 import com.brs.project.maintenance.entity.UserGroupMtn;
 import com.brs.project.maintenance.service.UserGroupMtnService;
+import com.sytan.base.lib.ApplicationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class UserGroupMtnController extends BaseController {
     }
 
     @RequestMapping(value = "/doGetUserGroupListApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doGetUserGroupListRsApi() {
+    public ResponseEntity<?> doGetUserGroupListRsApi() throws ApplicationException {
         ResponseModel response = new ResponseModel();
         List<UserGroupMtn> list = userGroupMtnService.getUserGroupMtnList();
         response.setUserGroupMtnList(list);

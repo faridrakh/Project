@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/sl/passvlt")
@@ -31,7 +34,6 @@ public class PassVaultController extends BaseController {
     public ResponseEntity<?> doInsertPasswordApi(@RequestBody RequestModel request) {
         ResponseModel response = new ResponseModel();
         PassVault passVault = new PassVault();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,passVault);
         passVault = passVaultService.insertPassword(passVault);
         response.setPassVault(passVault);
@@ -45,7 +47,20 @@ public class PassVaultController extends BaseController {
     public ResponseEntity<?> doUpdatePasswordApi(@RequestBody RequestModel request) {
         ResponseModel response = new ResponseModel();
         PassVault passVault = new PassVault();
-        ObjectCopier copy = new ObjectCopier();
+        copy.objectCopyValue(request,passVault);
+        String result = passVaultService.updatePassword(passVault);
+        if(CommonConstants.SUCCESS_DESCP.equals(result)) {
+            response.setErrorCode(CommonConstants.SUCCESS_CODE);
+            response.setErrorDescription(CommonConstants.SUCCESS_DESCP);
+        }
+        response.setTokenId(dataContainer.getTokenId());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @RequestMapping(value = "/doDeletePasswordApi", method = RequestMethod.POST)
+    public ResponseEntity<?> doDeletePasswordApi(@RequestBody RequestModel request) {
+        ResponseModel response = new ResponseModel();
+        PassVault passVault = new PassVault();
         copy.objectCopyValue(request,passVault);
         String result = passVaultService.updatePassword(passVault);
         if(CommonConstants.SUCCESS_DESCP.equals(result)) {
@@ -58,17 +73,18 @@ public class PassVaultController extends BaseController {
 
     @RequestMapping(value = "/doGetPasswordListApi", method = RequestMethod.POST)
     public ResponseEntity<?> doGetPasswordListApi(@RequestBody RequestModel request) {
-        ResponseModel response = new ResponseModel();
+        Map<String,Object> result = new LinkedHashMap<>();
         PassVault passVault = new PassVault();
-        ObjectCopier copy = new ObjectCopier();
         copy.objectCopyValue(request,passVault);
-        List<PassVault> result = passVaultService.getListPassword(passVault.getUsrId());
-        if(result.size() > 0) {
-            response.setErrorCode(CommonConstants.SUCCESS_CODE);
-            response.setErrorDescription(CommonConstants.SUCCESS_DESCP);
-            response.setPassVaultList(result);
+        result.put("errorCode", CommonConstants.SUCCESS_CODE);
+        result.put("errorDescription", CommonConstants.SUCCESS_DESCP);
+        result.put("tokenId", dataContainer.getTokenId());
+        result.putAll(passVaultService.getListPassword(passVault.getUsrId(),request.getPage()));
+        if(((List<PassVault>)result.get("passVaultList")).size() < 0) {
+            //result.put("passVaultList",new ArrayList<>());
+            result.put("errorCode", CommonConstants.NODATA_CODE);
+            result.put("errorDescription", CommonConstants.NODATA_DESCP);
         }
-        response.setTokenId(dataContainer.getTokenId());
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(result);
     }
 }

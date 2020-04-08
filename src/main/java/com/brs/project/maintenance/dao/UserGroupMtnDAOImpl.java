@@ -1,13 +1,12 @@
 package com.brs.project.maintenance.dao;
 
 import com.brs.project.maintenance.entity.UserGroupMtn;
-import com.brs.project.maintenance.service.UserGroupMtnServiceImpl;
+import com.sytan.base.lib.ApplicationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class UserGroupMtnDAOImpl implements UserGroupMtnDAO {
     }
 
     @Override
-    public List<UserGroupMtn> getUserGroupMtnList() {
+    public List<UserGroupMtn> getUserGroupMtnList() throws ApplicationException {
         if(logger.isDebugEnabled()){
             logger.debug("Start Data Access User Group");
         }
@@ -35,7 +34,7 @@ public class UserGroupMtnDAOImpl implements UserGroupMtnDAO {
     }
 
     @Override
-    public String getUserGroupMtnByCd(String cd) {
+    public String getUserGroupMtnByCd(String cd) throws ApplicationException {
         if(logger.isDebugEnabled()){
             logger.debug("Start Data Access User Group By CD");
         }

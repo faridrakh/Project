@@ -6,6 +6,7 @@ import com.brs.project.auth.service.AuthService;
 import com.brs.project.cache.service.CacheService;
 import com.brs.project.common.helper.CommonConstants;
 import com.brs.project.common.model.DataContainer;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,8 +50,9 @@ public class SecurityFilter extends OncePerRequestFilter {
                     dataContainer.setTokenId(session.getId());
                 }
             }
-        } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+        } catch (ApplicationException ex) {
+            logger.error("Could not set user authentication in security context with tokenId " + tokenId);
+            logger.error(ex);
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
