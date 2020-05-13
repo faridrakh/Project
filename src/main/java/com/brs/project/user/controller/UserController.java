@@ -27,8 +27,6 @@ public class UserController extends BaseController {
         this.userService = userService;
     }
 
-    private final CommonUtils commonUtils = new CommonUtils();
-
     @RequestMapping(value = "/doAddUserApi", method = RequestMethod.POST)
     public ResponseEntity<?> doAddUserApi(@RequestBody RequestModel request) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ApplicationException {
         ResponseModel response = new ResponseModel();

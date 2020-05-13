@@ -4,6 +4,7 @@ import com.brs.project.common.helper.CommonConstants;
 import com.brs.project.common.helper.CommonUtils;
 import com.brs.project.passvault.dao.PassVaultDAO;
 import com.brs.project.passvault.entity.PassVault;
+import com.sytan.base.lib.ApplicationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,7 @@ public class PassVaultServiceImpl implements PassVaultService {
     }
 
     @Override
-    public PassVault insertPassword(PassVault passVault) {
+    public PassVault insertPassword(PassVault passVault) throws ApplicationException {
         passVault.setId(commonUtils.generateUUID());
         passVault.setDtCreate(commonUtils.generateDate());
         passVault.setCreateBy(passVault.getUsrId());
@@ -29,7 +30,7 @@ public class PassVaultServiceImpl implements PassVaultService {
     }
 
     @Override
-    public String updatePassword(PassVault passVault) {
+    public String updatePassword(PassVault passVault) throws ApplicationException {
         PassVault tmp = passVaultDAO.getPassword(passVault.getId());
         passVault.setCreateBy(tmp.getCreateBy());
         passVault.setDtCreate(tmp.getDtCreate());
@@ -39,7 +40,7 @@ public class PassVaultServiceImpl implements PassVaultService {
     }
 
     @Override
-    public String deletePassword(String id) {
+    public String deletePassword(String id) throws ApplicationException {
         PassVault passVault = getPassword(id);
         passVault.setDtUpdate(commonUtils.generateDate());
         passVault.setUpdateBy(passVault.getUsrId());
@@ -48,12 +49,12 @@ public class PassVaultServiceImpl implements PassVaultService {
     }
 
     @Override
-    public PassVault getPassword(String id) {
+    public PassVault getPassword(String id) throws ApplicationException {
         return passVaultDAO.getPassword(id);
     }
 
     @Override
-    public Map<String,Object> getListPassword(String usrId, Integer page) {
+    public Map<String,Object> getListPassword(String usrId, Integer page) throws ApplicationException {
         return passVaultDAO.getListPassword(usrId,page);
     }
 }

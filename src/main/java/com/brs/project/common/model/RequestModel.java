@@ -1,9 +1,11 @@
 package com.brs.project.common.model;
 
+import com.brs.project.category.entity.Category;
 import com.brs.project.usergrp.entity.UserGroup;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Setter
@@ -24,4 +26,10 @@ public class RequestModel {
     private String updateBy;
     private String categoryName;
     private String type;
+    private String code;
+    private String description;
+    private BigDecimal amount;
+    private String action;
+    private String accountId;
+    private String categoryId;
 }

@@ -46,17 +46,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/sl/user/doCheckUserName",
                 "/sl/user/doCheckUserEmail",
                 "/sl/user/**",
-                "/sl/passvlt/**").permitAll()
+                "/sl/passvlt/**",
+                "/sl/category/**",
+                "/sl/account/**",
+                "/sl/transaction/**").permitAll()
                 .antMatchers(HttpMethod.POST,
                 "/sl/userGroupMtn/**",
                 "/sl/login/**",
                 "/sl/user/doAddUserApi",
                 "/sl/user/doCheckUserName",
-                "/sl/user/doCheckUserEmail").permitAll()
+                "/sl/user/doCheckUserEmail",
+                "/sl/category/**").permitAll()
                 .antMatchers(
                 "/sl/user/**",
-                "/sl/passvlt/**"
-                ).hasAnyRole("ADM","UL1","UL2")
+                "/sl/passvlt/**",
+                "/sl/account/**",
+                "/sl/transaction/**")
+                .hasAnyRole("ADM","UL1","UL2")
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

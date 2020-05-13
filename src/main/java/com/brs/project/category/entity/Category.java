@@ -22,4 +22,6 @@ public class Category {
     private String categoryName;
     @Column(name = "type")
     private String type;
+    @Column(name = "code")
+    private String code;
 }

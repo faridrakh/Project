@@ -2,6 +2,7 @@ package com.brs.project.passvault.dao;
 
 import com.brs.project.common.helper.CommonConstants;
 import com.brs.project.passvault.entity.PassVault;
+import com.sytan.base.lib.ApplicationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -24,19 +25,19 @@ public class PassVaultDAOImpl implements PassVaultDAO {
     }
 
     @Override
-    public PassVault insertPassword(PassVault passVault) {
+    public PassVault insertPassword(PassVault passVault) throws ApplicationException {
         entityManager.persist(passVault);
         return passVault;
     }
 
     @Override
-    public String updatePassword(PassVault passVault) {
+    public String updatePassword(PassVault passVault) throws ApplicationException  {
         entityManager.merge(passVault);
         return CommonConstants.SUCCESS_DESCP;
     }
 
     @Override
-    public String deletePassword(String id) {
+    public String deletePassword(String id) throws ApplicationException  {
         PassVault passVault = new PassVault();
         passVault.setId(id);
         entityManager.remove(passVault);
@@ -44,7 +45,7 @@ public class PassVaultDAOImpl implements PassVaultDAO {
     }
 
     @Override
-    public PassVault getPassword(String id) {
+    public PassVault getPassword(String id) throws ApplicationException  {
         PassVault result;
         String qr = "FROM PassVault u WHERE u.id = :id";
         Query query = entityManager.createQuery(qr);
@@ -54,7 +55,7 @@ public class PassVaultDAOImpl implements PassVaultDAO {
     }
 
     @Override
-    public Map<String,Object> getListPassword(String usrId, Integer page) {
+    public Map<String,Object> getListPassword(String usrId, Integer page) throws ApplicationException  {
         Map<String,Object> res = new LinkedHashMap<>();
         int pageSize = 5 * page;
         Query countQuery = entityManager.createQuery("Select count(p.id) FROM PassVault p where p.usrId = :usrId");

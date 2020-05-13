@@ -1,6 +1,8 @@
 package com.brs.project.common.model;
 
 import com.brs.project.category.entity.Category;
+import com.brs.project.financial.account.entity.Account;
+import com.brs.project.financial.transaction.entity.Transaction;
 import com.brs.project.maintenance.entity.UserGroupMtn;
 import com.brs.project.passvault.entity.PassVault;
 import com.brs.project.user.entity.User;
@@ -8,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,14 +20,6 @@ public class ResponseModel {
     private String errorCode;
     private String errorDescription;
     private String tokenId;
-//    private String id;
-//    private String userName;
-//    private String email;
-//    private String password;
-//    private String fullName;
-//    private String createDate;
-//    private String usrId;
-//    private String location;
     private User user;
     private PassVault passVault;
     private List<User> userList;
@@ -35,4 +28,8 @@ public class ResponseModel {
     private Map<String,Object> listData;
     private List<Category> categoryList;
     private Category category;
+    private Account account;
+    private Transaction transaction;
+    private List<Transaction> transactionList;
+    private List<Account> accountList;
 }

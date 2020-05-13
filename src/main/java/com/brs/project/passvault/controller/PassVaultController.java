@@ -6,6 +6,7 @@ import com.brs.project.common.model.RequestModel;
 import com.brs.project.common.model.ResponseModel;
 import com.brs.project.passvault.entity.PassVault;
 import com.brs.project.passvault.service.PassVaultService;
+import com.sytan.base.lib.ApplicationException;
 import com.sytan.base.lib.ObjectCopier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,7 @@ public class PassVaultController extends BaseController {
     }
 
     @RequestMapping(value = "/doInsertPasswordApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doInsertPasswordApi(@RequestBody RequestModel request) {
+    public ResponseEntity<?> doInsertPasswordApi(@RequestBody RequestModel request) throws ApplicationException {
         ResponseModel response = new ResponseModel();
         PassVault passVault = new PassVault();
         copy.objectCopyValue(request,passVault);
@@ -44,7 +45,7 @@ public class PassVaultController extends BaseController {
     }
 
     @RequestMapping(value = "/doUpdatePasswordApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doUpdatePasswordApi(@RequestBody RequestModel request) {
+    public ResponseEntity<?> doUpdatePasswordApi(@RequestBody RequestModel request) throws ApplicationException {
         ResponseModel response = new ResponseModel();
         PassVault passVault = new PassVault();
         copy.objectCopyValue(request,passVault);
@@ -58,7 +59,7 @@ public class PassVaultController extends BaseController {
     }
 
     @RequestMapping(value = "/doDeletePasswordApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doDeletePasswordApi(@RequestBody RequestModel request) {
+    public ResponseEntity<?> doDeletePasswordApi(@RequestBody RequestModel request) throws ApplicationException {
         ResponseModel response = new ResponseModel();
         PassVault passVault = new PassVault();
         copy.objectCopyValue(request,passVault);
@@ -72,7 +73,7 @@ public class PassVaultController extends BaseController {
     }
 
     @RequestMapping(value = "/doGetPasswordListApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doGetPasswordListApi(@RequestBody RequestModel request) {
+    public ResponseEntity<?> doGetPasswordListApi(@RequestBody RequestModel request) throws ApplicationException {
         Map<String,Object> result = new LinkedHashMap<>();
         PassVault passVault = new PassVault();
         copy.objectCopyValue(request,passVault);
