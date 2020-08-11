@@ -1,6 +1,5 @@
 package com.brs.project.usergrp.entity;
 
-import com.brs.project.maintenance.entity.UserGroupMtn;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +19,11 @@ public class UserGroup {
     @Column(name = "MT_GRP_ID")
     private String mtGrpId;
 
-    @OneToOne
-    @JoinColumn(name="MT_GRP_ID", insertable = false, updatable = false)
-    private UserGroupMtn userGroupMtn;
+    private String role;
+    private String roleName;
+
+
+//    @OneToOne
+//    @JoinColumn(name="MT_GRP_ID", insertable = false, updatable = false)
+//    private UserGroupMtn userGroupMtn;
 }

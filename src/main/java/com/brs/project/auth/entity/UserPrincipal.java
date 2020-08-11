@@ -37,8 +37,8 @@ public class UserPrincipal implements UserDetails {
         this.credentialsNonExpired = true;
     }
 
-    public static UserPrincipal create(User user) {
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+user.getUserGroup().getUserGroupMtn().getCd());
+    public static UserPrincipal create(User user,String role) {
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+role);
 
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(authority);

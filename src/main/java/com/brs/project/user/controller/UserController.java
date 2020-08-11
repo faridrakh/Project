@@ -6,8 +6,11 @@ import com.brs.project.common.helper.CommonUtils;
 import com.brs.project.common.helper.RequestMapper;
 import com.brs.project.common.model.RequestModel;
 import com.brs.project.common.model.ResponseModel;
+import com.brs.project.maintenance.entity.UserGroupMtn;
 import com.brs.project.user.entity.User;
 import com.brs.project.user.service.UserService;
+import com.brs.project.usergrp.entity.UserGroup;
+import com.brs.project.usergrp.service.UserGroupService;
 import com.sytan.base.lib.ApplicationException;
 import com.sytan.base.lib.ObjectCopier;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +25,11 @@ import java.lang.reflect.InvocationTargetException;
 @RequestMapping("/sl/user")
 public class UserController extends BaseController {
     private UserService userService;
+    private UserGroupService userGroupService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, UserGroupService userGroupService){
         this.userService = userService;
+        this.userGroupService = userGroupService;
     }
 
     @RequestMapping(value = "/doAddUserApi", method = RequestMethod.POST)
@@ -69,16 +74,21 @@ public class UserController extends BaseController {
 //    }
 
     @RequestMapping(value = "/doGetUserDetailApi", method = RequestMethod.POST)
-    public ResponseEntity<?> doGetUserDetailApi(@RequestBody RequestModel request) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public ResponseEntity<?> doGetUserDetailApi(@RequestBody RequestModel request) throws ApplicationException {
         ResponseModel response = new ResponseModel();
         User user = new User();
+        UserGroup userGroup;
         copy.objectCopyValue(request,user);
         if(!dataContainer.getUserId().equals(user.getId())){
             //throw new Exception("Unauthorized");
         }
         user = userService.getUser(user.getId());
+        userGroup = userGroupService.getUserGrp(user.getUserGrpId());
         if(null != user) {
             response.setUser(user);
+        }
+        if(null == userGroup) {
+            response.setUserGroup(userGroup);
         }
         response.setErrorCode(CommonConstants.SUCCESS_CODE);
         response.setErrorDescription(CommonConstants.SUCCESS_DESCP);

@@ -6,6 +6,6 @@ import com.sytan.base.lib.ApplicationException;
 import java.util.List;
 
 public interface UserGroupMtnDAO {
-    List<UserGroupMtn> getUserGroupMtnList() throws ApplicationException, ApplicationException;
+    List<UserGroupMtn> getUserGroupMtnList() throws ApplicationException;
     String getUserGroupMtnByCd(String cd) throws ApplicationException;
 }

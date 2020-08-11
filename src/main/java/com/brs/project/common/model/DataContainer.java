@@ -16,4 +16,5 @@ public class DataContainer {
     private String tokenId;
     private LoginSession loginSession;
     private User user;
+    private String userRole;
 }

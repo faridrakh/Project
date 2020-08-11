@@ -32,4 +32,6 @@ public class RequestModel {
     private String action;
     private String accountId;
     private String categoryId;
+    private String channel;
+    private String ipAddress;
 }

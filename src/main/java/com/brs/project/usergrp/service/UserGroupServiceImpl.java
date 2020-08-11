@@ -31,4 +31,9 @@ public class UserGroupServiceImpl implements UserGroupService{
         userGroupModel.setMtGrpId(mtGrpId);
         userGroupDAO.addUserGrp(userGroupModel);
     }
+
+    @Override
+    public UserGroup getUserGrp(String id) throws ApplicationException {
+        return userGroupDAO.getUserGroupCodeById(id);
+    }
 }

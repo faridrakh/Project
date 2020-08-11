@@ -44,7 +44,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public Account getAccount(String uid, String accountId) throws ApplicationException {
         Account result;
-        String qr = "FROM Account u WHERE u.userId = :id and u.accountId = :aid";
+        String qr = "FROM Account u WHERE u.usrId = :id and u.id = :aid";
         Query query = entityManager.createQuery(qr);
         query.setParameter("id", uid);
         query.setParameter("aid",  accountId);

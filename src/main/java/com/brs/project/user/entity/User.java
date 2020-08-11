@@ -42,7 +42,10 @@ public class User {
     @Column(name = "UPDATE_BY")
     private String updateBy;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="USR_GRP_ID")
-    private UserGroup userGroup;
+    @Column(name="USR_GRP_ID")
+    private String userGrpId;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="USR_GRP_ID")
+//    private UserGroup userGroup;
 }

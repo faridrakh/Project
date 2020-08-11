@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserGroupDAO {
     UserGroup addUserGrp(UserGroup userGrp);
-    List<UserGroup> getUserGroupListByUserId(String userId);
+    UserGroup getUserGroupCodeById(String userId);
 }

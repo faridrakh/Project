@@ -35,7 +35,7 @@ public class AuthController extends BaseController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        LoginSession session = authService.processLogin(null,authentication);
+        LoginSession session = authService.processLogin(null,authentication,loginRequest.getChannel(), loginRequest.getIpAddress());
         return ResponseEntity.ok(session);
     }
 }

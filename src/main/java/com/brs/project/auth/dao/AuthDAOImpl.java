@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Repository
 public class AuthDAOImpl implements AuthDAO {
@@ -28,7 +30,8 @@ public class AuthDAOImpl implements AuthDAO {
     @Override
     public LoginSession updateLoginSession(LoginSession login) throws ApplicationException {
         LoginSession lmodel = entityManager.find(LoginSession.class,login.getId());
-        lmodel.setIsActive("N");
+        //lmodel.setIsActive("N");
+        lmodel.setLoginDate(new Timestamp(new Date().getTime()));
         entityManager.merge(lmodel);
         return lmodel;
     }

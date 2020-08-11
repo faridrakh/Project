@@ -13,7 +13,6 @@ public class DataInitializer {
 
     public DataInitializer(UserGroupMtnService userGroupMtnService){
         this.userGroupMtnService = userGroupMtnService;
-
     }
 
     @PostConstruct

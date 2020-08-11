@@ -6,6 +6,8 @@ import com.brs.project.auth.entity.UserPrincipal;
 import com.brs.project.common.helper.CommonUtils;
 import com.brs.project.user.dao.UserDAO;
 import com.brs.project.user.entity.User;
+import com.brs.project.usergrp.dao.UserGroupDAO;
+import com.brs.project.usergrp.entity.UserGroup;
 import com.sytan.base.lib.ApplicationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,22 +25,24 @@ import java.util.Date;
 public class AuthServiceImpl implements AuthService, UserDetailsService {
     private UserDAO userDAO;
     private AuthDAO authDAO;
+    private UserGroupDAO userGroupDAO;
 
-    public AuthServiceImpl(AuthDAO authDAO,UserDAO userDAO){
+    public AuthServiceImpl(AuthDAO authDAO,UserDAO userDAO, UserGroupDAO userGroupDAO){
         this.authDAO = authDAO;
         this.userDAO = userDAO;
+        this.userGroupDAO = userGroupDAO;
     }
 
     @Override
-    public LoginSession processLogin(String tokenId, Authentication authentication) throws ApplicationException {
+    public LoginSession processLogin(String tokenId, Authentication authentication, String channel, String ipAddress) throws ApplicationException {
         UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
         LoginSession session = new LoginSession();
         session.setId(CommonUtils.generateUUID());
         session.setUsrId(user.getId());
         session.setLoginDate(new Timestamp(new Date().getTime()));
         session.setLastSessionId(tokenId);
-        session.setChannel("TEST");
-        session.setIpAddress("localhost");
+        session.setChannel(channel);
+        session.setIpAddress(ipAddress);
         session.setTokenDuration(300);
         session.setIsActive("Y");
         authDAO.insertLoginSession(session);
@@ -58,7 +62,11 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         if(null == user){
             new UsernameNotFoundException("User not found with UserName : " + s);
         }
-        return UserPrincipal.create(user);
+        UserGroup ug = userGroupDAO.getUserGroupCodeById(user.getUserGrpId());
+        if(null == ug.getRole() || "".equals(ug.getRole())){
+            new UsernameNotFoundException("User role not found with UserName : " + s);
+        }
+        return UserPrincipal.create(user,ug.getRole());
     }
 
     public LoginSession loadUserSessionByTokenId(String id) throws ApplicationException {

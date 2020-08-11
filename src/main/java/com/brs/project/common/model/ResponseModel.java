@@ -6,6 +6,7 @@ import com.brs.project.financial.transaction.entity.Transaction;
 import com.brs.project.maintenance.entity.UserGroupMtn;
 import com.brs.project.passvault.entity.PassVault;
 import com.brs.project.user.entity.User;
+import com.brs.project.usergrp.entity.UserGroup;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class ResponseModel {
     private String errorDescription;
     private String tokenId;
     private User user;
+    private UserGroup userGroup;
     private PassVault passVault;
     private List<User> userList;
     private List<UserGroupMtn> userGroupMtnList;
