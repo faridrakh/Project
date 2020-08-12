@@ -10,6 +10,7 @@ public class ProjectApplication {
 		SpringApplication.run(ProjectApplication.class, args);
 		
 		System.out.println("test");
+<<<<<<< HEAD
 		System.out.println("test");
 		System.out.println("test");
 		System.out.println("test");
@@ -23,5 +24,7 @@ public class ProjectApplication {
 		System.out.println("test");
 		System.out.println("test");
 		System.out.println("test");
+=======
+>>>>>>> feature_test
 	}
 }
